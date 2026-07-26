@@ -1,18 +1,29 @@
-# Build and Release Folders
-bin-debug/
-bin-release/
-[Oo]bj/
-[Bb]in/
+# Dependencies
+node_modules/
 
-# Other files and folders
-.settings/
+# Local environment and secrets
+.env
+.env.*
+!.env.example
+*.secret.*
+*yida-token*
 
-# Executables
-*.swf
-*.air
-*.ipa
-*.apk
+# Logs and temporary files
+*.log
+*.tmp
+*.bak
+.cache/
+.temp/
+tmp/
 
-# Project files, i.e. `.project`, `.actionScriptProperties` and `.flexProperties`
-# should NOT be excluded as they contain compiler settings and other important
-# information for Eclipse / Flash Builder.
+# Test and tooling output
+coverage/
+
+# Editors and operating systems
+.vscode/
+.idea/
+*.swp
+.DS_Store
+Thumbs.db
+
+# `public/` is intentionally tracked because it is the stable release directory.
