@@ -51,6 +51,13 @@
  */
 ```
 
+### 3.2 代码仓库与发布源
+
+- GitHub 仓库 `https://github.com/ariesjang/yida_extend_methods` 是本项目唯一的权威代码仓库和发布源，本地 `origin` 必须指向该仓库。
+- Gitee 仓库仅视为历史副本，不再维护、同步或推送任何分支、提交和标签；后续流程不得将 Gitee 作为回源、发布或版本一致性依据。
+- 每次代码发布只向 GitHub 的 `master` 分支和对应版本标签推送。发布完成后必须核对 GitHub 上的提交 SHA、标签和 `public/` 发布脚本版本一致。
+- JSDMirror 通过 GitHub `/gh/` 路径拉取发布脚本。固定加载地址为 `https://cdn.jsdmirror.com/gh/ariesjang/yida_extend_methods@master/public/yida-extend-methods.js`，版本归档地址使用对应 Git 标签替换 `master`。
+
 ## 4. `this` 上下文规则
 
 - 导出的动作函数由宜搭调用时，函数最外层的 `this` 指向宜搭页面上下文。
