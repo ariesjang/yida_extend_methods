@@ -1,24 +1,25 @@
 /**
  * 宜搭公共 JavaScript 扩展脚本，供宜搭页面通过 `this.utils.loadScript()` 加载。
  *
- * @version v202607261355
- * @compatibility 使用原生 ES6 语法，不使用可选链或空值合并。
+ * @version v202607261421
+ * @compatibility 作为经典脚本加载，使用原生 ES6 语法，不使用 `export`、`import`、可选链或空值合并。
  */
 
-var YIDA_EXT_VERSION = 'v202607261355';
+var YIDA_EXT_VERSION = 'v202607261421';
 
 /**
  * 验证公共扩展脚本是否已正确加载，并向当前宜搭页面显示成功提示。
  *
  * @title 测试公共扩展脚本
  * @returns {{loaded: boolean, methodName: string, version: string}} 同步返回加载状态、当前方法名称和脚本版本号。
- * @context 依赖 `this.utils.toast()`；必须由宜搭动作面板以正确的页面上下文调用，不依赖 fieldId、数据源或页面状态。
- * @sideEffects 在当前页面显示一条短暂的成功 Toast；不修改字段值、页面状态、全局状态或 DOM。
+ * @context 依赖 `this.utils.toast()`；宜搭动作面板必须通过 `window.YidaExt.yidaExt_test.call(this)` 传入正确页面上下文，不依赖 fieldId、数据源或页面状态。
+ * @sideEffects 在当前页面显示一条短暂的成功 Toast；脚本加载时会向 `window.YidaExt` 注册本方法，不修改字段值、页面状态或 DOM。
  * @throws {Error} 当宜搭页面上下文不存在，或当前环境不提供 `this.utils.toast()` 时抛出错误。
  * @example
- * this.yidaExt_test();
+ * this.utils.loadScript('https://example.com/yida-extend-methods.js')
+ *   .then(() => window.YidaExt.yidaExt_test.call(this));
  */
-export function yidaExt_test() {
+function yidaExt_test() {
   if (!this || !this.utils || typeof this.utils.toast !== 'function') {
     throw new Error('yidaExt_test 调用失败：当前环境缺少宜搭 this.utils.toast() API。');
   }
@@ -35,3 +36,7 @@ export function yidaExt_test() {
     version: YIDA_EXT_VERSION
   };
 }
+
+window.YidaExt = window.YidaExt || {};
+window.YidaExt.version = YIDA_EXT_VERSION;
+window.YidaExt.yidaExt_test = yidaExt_test;

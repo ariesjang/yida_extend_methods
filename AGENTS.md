@@ -24,7 +24,8 @@
 - `public/` 必须纳入 Git 版本管理，不得在 `.gitignore` 中忽略。构建流程不得在未生成有效替代文件的情况下清空或删除现有发布脚本。
 - 引入构建流程后，`src/` 是人工维护的源码目录，`public/` 是生成的发布目录；不得直接修改生成后的文件，修改应在 `src/` 完成并重新构建。
 - 本项目所有函数统一使用 `yidaExt_` 前缀，前缀后的名称采用 lowerCamelCase，例如 `yidaExt_test`、`yidaExt_normalizeText`。新增函数不得使用其他前缀或无前缀名称。
-- 公共动作入口使用具名声明 `export function actionName(...) {}`。不使用默认导出、匿名导出或变量形式的函数导出。
+- `public/` 脚本由 `this.utils.loadScript()` 以经典脚本方式加载，禁止在发布文件中使用 `export` 或 `import`。发布方法通过 `window.YidaExt` 命名空间暴露，例如 `window.YidaExt.yidaExt_test`。
+- 宜搭动作面板内的包装动作仍使用具名声明 `export function actionName(...) {}`，由包装动作加载脚本后通过 `window.YidaExt.methodName.call(this, ...)` 调用公共方法；不使用默认导出、匿名导出或变量形式的函数导出。
 - 导出的函数名称必须唯一、语义明确且保持稳定；修改公共函数名称视为接口变更。
 - 仅需要被宜搭动作面板识别和调用的公共动作使用 `export`。内部工具函数使用普通具名 `function`，不得无意义地暴露到动作面板。
 - 公共动作入口应保持简洁，主要负责参数接收、校验、宜搭上下文读取、流程编排和结果返回。
