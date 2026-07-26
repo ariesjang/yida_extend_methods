@@ -1,11 +1,26 @@
 /**
  * 宜搭公共 JavaScript 扩展脚本，供宜搭页面通过 `this.utils.loadScript()` 加载。
  *
- * @version v202607261421
+ * @version v202607261424
  * @compatibility 作为经典脚本加载，使用原生 ES6 语法，不使用 `export`、`import`、可选链或空值合并。
  */
 
-var YIDA_EXT_VERSION = 'v202607261421';
+var YIDA_EXT_VERSION = 'v202607261424';
+
+/**
+ * 获取当前公共扩展脚本的发布版本号，适用于加载校验、问题诊断和版本兼容判断。
+ *
+ * @title 获取扩展脚本版本号
+ * @returns {string} 同步返回 `vyyyyMMddHHMM` 格式的当前脚本版本号。
+ * @context 不依赖宜搭页面上下文、fieldId、数据源或页面状态，可直接通过 `window.YidaExt.yidaExt_getVersion()` 调用。
+ * @sideEffects 无；仅读取脚本级静态变量 `YIDA_EXT_VERSION`。
+ * @throws {never} 本方法不抛出异常。
+ * @example
+ * var version = window.YidaExt.yidaExt_getVersion();
+ */
+function yidaExt_getVersion() {
+  return YIDA_EXT_VERSION;
+}
 
 /**
  * 验证公共扩展脚本是否已正确加载，并向当前宜搭页面显示成功提示。
@@ -39,4 +54,5 @@ function yidaExt_test() {
 
 window.YidaExt = window.YidaExt || {};
 window.YidaExt.version = YIDA_EXT_VERSION;
+window.YidaExt.yidaExt_getVersion = yidaExt_getVersion;
 window.YidaExt.yidaExt_test = yidaExt_test;
