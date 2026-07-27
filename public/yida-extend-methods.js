@@ -1,11 +1,11 @@
 /**
  * 宜搭公共 JavaScript 扩展脚本，供宜搭页面通过 `this.utils.loadScript()` 加载。
  *
- * @version v202607261424
+ * @version v202607270916
  * @compatibility 作为经典脚本加载，使用原生 ES6 语法，不使用 `export`、`import`、可选链或空值合并。
  */
 
-var YIDA_EXT_VERSION = 'v202607261424';
+var YIDA_EXT_VERSION = 'v202607270916';
 
 /**
  * 获取当前公共扩展脚本的发布版本号，适用于加载校验、问题诊断和版本兼容判断。

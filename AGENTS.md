@@ -24,7 +24,8 @@
 - `public/` 必须纳入 Git 版本管理，不得在 `.gitignore` 中忽略。构建流程不得在未生成有效替代文件的情况下清空或删除现有发布脚本。
 - 引入构建流程后，`src/` 是人工维护的源码目录，`public/` 是生成的发布目录；不得直接修改生成后的文件，修改应在 `src/` 完成并重新构建。
 - 本项目所有函数统一使用 `yidaExt_` 前缀，前缀后的名称采用 lowerCamelCase，例如 `yidaExt_test`、`yidaExt_normalizeText`。新增函数不得使用其他前缀或无前缀名称。
-- `public/` 脚本由 `this.utils.loadScript()` 以经典脚本方式加载，禁止在发布文件中使用 `export` 或 `import`。发布方法通过 `window.YidaExt` 命名空间暴露，例如 `window.YidaExt.yidaExt_test`。
+- `public/` 中不以 `.esm.js` 结尾的脚本由 `this.utils.loadScript()` 以经典脚本方式加载，禁止使用 `export` 或 `import`。发布方法通过 `window.YidaExt` 命名空间暴露，例如 `window.YidaExt.yidaExt_test`。
+- `public/*.esm.js` 是供页面通过 ES Module `import` 引用的独立发布入口，允许使用具名 `export`，不得依赖 `window.YidaExt` 完成方法导出。经典脚本与 ESM 脚本中同名公共方法的参数、返回值、错误语义和版本号必须保持一致。
 - 宜搭动作面板内的包装动作仍使用具名声明 `export function actionName(...) {}`，由包装动作加载脚本后通过 `window.YidaExt.methodName.call(this, ...)` 调用公共方法；不使用默认导出、匿名导出或变量形式的函数导出。
 - 导出的函数名称必须唯一、语义明确且保持稳定；修改公共函数名称视为接口变更。
 - 仅需要被宜搭动作面板识别和调用的公共动作使用 `export`。内部工具函数使用普通具名 `function`，不得无意义地暴露到动作面板。
@@ -56,7 +57,7 @@
 - GitHub 仓库 `https://github.com/ariesjang/yida_extend_methods` 是本项目唯一的权威代码仓库和发布源，本地 `origin` 必须指向该仓库。
 - Gitee 仓库仅视为历史副本，不再维护、同步或推送任何分支、提交和标签；后续流程不得将 Gitee 作为回源、发布或版本一致性依据。
 - 每次代码发布只向 GitHub 的 `master` 分支和对应版本标签推送。发布完成后必须核对 GitHub 上的提交 SHA、标签和 `public/` 发布脚本版本一致。
-- JSDMirror 通过 GitHub `/gh/` 路径拉取发布脚本。固定加载地址为 `https://cdn.jsdmirror.com/gh/ariesjang/yida_extend_methods@master/public/yida-extend-methods.js`，版本归档地址使用对应 Git 标签替换 `master`。
+- JSDMirror 通过 GitHub `/gh/` 路径拉取发布脚本。经典脚本固定加载地址为 `https://cdn.jsdmirror.com/gh/ariesjang/yida_extend_methods@master/public/yida-extend-methods.js`，ESM 固定导入地址为 `https://cdn.jsdmirror.com/gh/ariesjang/yida_extend_methods@master/public/yida-extend-methods.esm.js`；版本归档地址使用对应 Git 标签替换 `master`。
 
 ## 4. `this` 上下文规则
 
